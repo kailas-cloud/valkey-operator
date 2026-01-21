@@ -4,11 +4,45 @@ Provision [valkey](https://valkey.io) (redis) clusters
 
 ## Description
 
-This operator creates valkey clusters and makes them available to other services on the k8s cluster
+This operator creates valkey clusters and makes them available to other services on the k8s cluster.
 
 Fork of [hyperspike/valkey-operator](https://github.com/hyperspike/valkey-operator) by Daniel Molik.
 
 See the following link for more information on available Custom Resource Options: [https://doc.crds.dev/github.com/kailas-cloud/valkey-operator](https://doc.crds.dev/github.com/kailas-cloud/valkey-operator)
+
+## Fork Changes
+
+This fork includes the following modifications from the upstream project:
+
+### API Group Rebrand
+- Changed API group from `hyperspike.io` to `kailas.cloud`
+- CRD is now `valkeys.kailas.cloud` instead of `valkeys.hyperspike.io`
+
+### Valkey Modules Support
+Added ability to load Valkey modules at startup via the `modules` field in ValkeySpec:
+
+```yaml
+apiVersion: kailas.cloud/v1
+kind: Valkey
+metadata:
+  name: my-valkey
+spec:
+  shards: 3
+  replicas: 1
+  modules:
+    - path: /usr/lib/valkey/libsearch.so
+      args:
+        - "--use-coordinator"
+        - "yes"
+        - "--reader-threads"
+        - "8"
+```
+
+This enables running Valkey with extensions like [valkey-search](https://github.com/valkey-io/valkey-search) in distributed coordinator mode.
+
+### Other Changes
+- Updated container registry to `ghcr.io/kailas-cloud`
+- Added default valkey.conf with search module configuration
 
 ## Getting Started
 
