@@ -32,11 +32,18 @@ spec:
   modules:
     - path: /usr/lib/valkey/libsearch.so
       args:
-        - "--use-coordinator"
-        - "yes"
-        - "--reader-threads"
+        - --use-coordinator
+        - --reader-threads
         - "8"
+        - --writer-threads
+        - "4"
+        - --hnsw-block-size
+        - "10000"
+        - --log-level
+        - notice
 ```
+
+**Note:** Boolean flags like `--use-coordinator` are specified without a value. Using `--use-coordinator yes` will NOT work.
 
 This enables running Valkey with extensions like [valkey-search](https://github.com/valkey-io/valkey-search) in distributed coordinator mode.
 
