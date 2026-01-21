@@ -6,7 +6,9 @@ Provision [valkey](https://valkey.io) (redis) clusters
 
 This operator creates valkey clusters and makes them available to other services on the k8s cluster
 
-See the following link for more information on available Custom Resource Options: [https://doc.crds.dev/github.com/hyperspike/valkey-operator](https://doc.crds.dev/github.com/hyperspike/valkey-operator)
+Fork of [hyperspike/valkey-operator](https://github.com/hyperspike/valkey-operator) by Daniel Molik.
+
+See the following link for more information on available Custom Resource Options: [https://doc.crds.dev/github.com/kailas-cloud/valkey-operator](https://doc.crds.dev/github.com/kailas-cloud/valkey-operator)
 
 ## Getting Started
 
@@ -44,22 +46,22 @@ make minikube-delete
 To install the valkey-operator, all you need to do is run the following command:
 
 ```sh
-LATEST=$(curl -s https://api.github.com/repos/hyperspike/valkey-operator/releases/latest | jq -cr .tag_name)
-curl -sL https://github.com/hyperspike/valkey-operator/releases/download/$LATEST/install.yaml | kubectl create -f -
+LATEST=$(curl -s https://api.github.com/repos/kailas-cloud/valkey-operator/releases/latest | jq -cr .tag_name)
+curl -sL https://github.com/kailas-cloud/valkey-operator/releases/download/$LATEST/install.yaml | kubectl create -f -
 ```
 
 ### Helm
 
 ```sh
-LATEST=$(curl -s https://api.github.com/repos/hyperspike/valkey-operator/releases/latest | jq -cr .tag_name)
-helm install valkey-operator --namespace valkey-operator-system --create-namespace oci://ghcr.io/hyperspike/valkey-operator --version ${LATEST}-chart
+LATEST=$(curl -s https://api.github.com/repos/kailas-cloud/valkey-operator/releases/latest | jq -cr .tag_name)
+helm install valkey-operator --namespace valkey-operator-system --create-namespace oci://ghcr.io/kailas-cloud/valkey-operator --version ${LATEST}-chart
 ```
 
 ### Verifying the container image
 
 ```sh
-LATEST=$(curl -s https://api.github.com/repos/hyperspike/valkey-operator/releases/latest | jq -cr .tag_name)
-cosign verify ghcr.io/hyperspike/valkey-operator:$LATEST  --certificate-oidc-issuer https://token.actions.githubusercontent.com --certificate-identity https://github.com/hyperspike/valkey-operator/.github/workflows/image.yaml@refs/tags/$LATEST
+LATEST=$(curl -s https://api.github.com/repos/kailas-cloud/valkey-operator/releases/latest | jq -cr .tag_name)
+cosign verify ghcr.io/kailas-cloud/valkey-operator:$LATEST  --certificate-oidc-issuer https://token.actions.githubusercontent.com --certificate-identity https://github.com/kailas-cloud/valkey-operator/.github/workflows/image.yaml@refs/tags/$LATEST
 ```
 
 ## Contributing
@@ -90,7 +92,9 @@ export REGISTRY=localhost:5000; export VERSION=1; \
 
 ## License
 
-Copyright 2024.
+Originally created by Daniel Molik ([Hyperspike](https://hyperspike.io)).
+
+Copyright 2024 Daniel Molik, 2024-2026 kailas-cloud contributors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.

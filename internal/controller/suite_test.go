@@ -35,7 +35,7 @@ import (
 	logf "sigs.k8s.io/controller-runtime/pkg/log"
 	"sigs.k8s.io/controller-runtime/pkg/log/zap"
 
-	hyperspikeiov1 "hyperspike.io/valkey-operator/api/v1"
+	hyperspikeiov1 "kailas.cloud/valkey-operator/api/v1"
 	// +kubebuilder:scaffold:imports
 )
 

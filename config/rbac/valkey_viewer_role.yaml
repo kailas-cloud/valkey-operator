@@ -8,7 +8,7 @@ metadata:
   name: valkey-viewer-role
 rules:
 - apiGroups:
-  - hyperspike.io
+  - kailas.cloud
   resources:
   - valkeys
   verbs:
@@ -16,7 +16,7 @@ rules:
   - list
   - watch
 - apiGroups:
-  - hyperspike.io
+  - kailas.cloud
   resources:
   - valkeys/status
   verbs:

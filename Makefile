@@ -1,5 +1,5 @@
 # Image URL to use all building/pushing image targets
-REGISTRY ?= ghcr.io/hyperspike
+REGISTRY ?= ghcr.io/kailas-cloud
 IMG_CONTROLLER ?= $(REGISTRY)/valkey-operator:$(VERSION)
 IMG_SIDECAR ?= $(REGISTRY)/valkey-sidecar:$(VERSION)
 IMG_VALKEY ?= $(REGISTRY)/valkey:$(VALKEY_VERSION)
@@ -216,8 +216,8 @@ minikube: ## Spool up a local minikube cluster for development
 quickstart: minikube install-operator install-cr ## Install the operator into the minikube cluster and deploy the sample CR use the TLS and PROMETHEUS variables to enable those features
 
 install-operator: ## Install the operator into the minikube cluster
-	$QLATEST=$(shell curl -s https://api.github.com/repos/hyperspike/valkey-operator/releases/latest | jq -Mr .tag_name) \
-		&& curl -sL https://github.com/hyperspike/valkey-operator/releases/download/$$LATEST/install.yaml | kubectl apply -f -
+	$QLATEST=$(shell curl -s https://api.github.com/repos/kailas-cloud/valkey-operator/releases/latest | jq -Mr .tag_name) \
+		&& curl -sL https://github.com/kailas-cloud/valkey-operator/releases/download/$$LATEST/install.yaml | kubectl apply -f -
 install-cr: ## Install the sample CR into the minikube cluster
 	$Q(if [ ! -z $$TLS ] ; then TLS_VALUE=true ; else TLS_VALUE=false ; fi ; if [ ! -z $$PROMETHEUS ] ; then PROMETHEUS_VALUE=true ; else PROMETHEUS_VALUE=false ; fi ;  sed -e "s/@TLS@/$$TLS_VALUE/" -e "s/@PROMETHEUS@/$$PROMETHEUS_VALUE/" valkey.yml.tpl | $(KUBECTL) apply -f - )
 
@@ -260,7 +260,7 @@ helm-package: helm-gen helm ## Package Helm chart
 	$Q$(HELM) package valkey-operator --app-version $(VERSION) --version $(VERSION)-chart
 
 helm-publish: helm-package ## Publish Helm chart
-	$Q$(HELM) push valkey-operator-$(VERSION)-chart.tgz oci://ghcr.io/hyperspike
+	$Q$(HELM) push valkey-operator-$(VERSION)-chart.tgz oci://ghcr.io/kailas-cloud
 
 .PHONY: tunnel registry-proxy prometheus-proxy
 tunnel: ## turn on minikube's tunnel to test ingress and get UI access
@@ -315,7 +315,7 @@ define go-install-tool
 set -e; \
 package=$(2)@$(3) ;\
 echo "Downloading $${package}" ;\
-GOOS=linux GOARCH=amd64 GOBIN=$(LOCALBIN) go install $${package} ;\
+GOBIN=$(LOCALBIN) go install $${package} ;\
 mv "$$(echo "$(1)" | sed "s/-$(3)$$//")" $(1) ;\
 }
 endef

@@ -4,9 +4,9 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     controller-gen.kubebuilder.io/version: v0.19.0
-  name: valkeys.hyperspike.io
+  name: valkeys.kailas.cloud
 spec:
-  group: hyperspike.io
+  group: kailas.cloud
   names:
     kind: Valkey
     listKind: ValkeyList
@@ -231,6 +231,24 @@ spec:
               image:
                 description: Image to use
                 type: string
+              modules:
+                description: Modules to load at startup (e.g., valkey-search with
+                  coordinator)
+                items:
+                  description: ValkeyModule defines a Valkey module to load at startup
+                  properties:
+                    args:
+                      description: Arguments to pass to the module
+                      items:
+                        type: string
+                      type: array
+                    path:
+                      description: Path to the module shared library (.so file)
+                      type: string
+                  required:
+                  - path
+                  type: object
+                type: array
               nodeSelector:
                 additionalProperties:
                   type: string
@@ -485,7 +503,7 @@ spec:
                       resources:
                         description: |-
                           resources represents the minimum resources the volume should have.
-                          If RecoverVolumeExpansionFailure feature is enabled users are allowed to specify resource requirements
+                          Users are allowed to specify resource requirements
                           that are lower than previous value but must still be higher than capacity recorded in the
                           status field of the claim.
                           More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#resources
@@ -642,8 +660,7 @@ spec:
                           for the purpose it was designed. For example - a controller
                           that\nonly is responsible for resizing capacity of the volume,
                           should ignore PVC updates that change other valid\nresources
-                          associated with PVC.\n\nThis is an alpha field and requires
-                          enabling RecoverVolumeExpansionFailure feature."
+                          associated with PVC."
                         type: object
                         x-kubernetes-map-type: granular
                       allocatedResources:
@@ -674,8 +691,7 @@ spec:
                           for the purpose it was designed. For example - a controller
                           that\nonly is responsible for resizing capacity of the volume,
                           should ignore PVC updates that change other valid\nresources
-                          associated with PVC.\n\nThis is an alpha field and requires
-                          enabling RecoverVolumeExpansionFailure feature."
+                          associated with PVC."
                         type: object
                       capacity:
                         additionalProperties:
@@ -795,9 +811,10 @@ spec:
                     operator:
                       description: |-
                         Operator represents a key's relationship to the value.
-                        Valid operators are Exists and Equal. Defaults to Equal.
+                        Valid operators are Exists, Equal, Lt, and Gt. Defaults to Equal.
                         Exists is equivalent to wildcard for value, so that a pod can
                         tolerate all taints of a particular category.
+                        Lt and Gt perform numeric comparisons (requires feature gate TaintTolerationComparisonOperators).
                       type: string
                     tolerationSeconds:
                       description: |-

@@ -24,7 +24,7 @@ import (
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 
-	"hyperspike.io/valkey-operator/test/utils"
+	"kailas.cloud/valkey-operator/test/utils"
 )
 
 const namespace = "valkey-operator-system"

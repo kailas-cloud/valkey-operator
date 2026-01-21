@@ -1,4 +1,4 @@
-apiVersion: hyperspike.io/v1
+apiVersion: kailas.cloud/v1
 kind: Valkey
 metadata:
   labels:

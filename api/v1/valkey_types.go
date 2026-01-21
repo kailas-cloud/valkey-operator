@@ -24,6 +24,17 @@ import (
 // EDIT THIS FILE!  THIS IS SCAFFOLDING FOR YOU TO OWN!
 // NOTE: json tags are required.  Any new fields you add must have json tags for the fields to be serialized.
 
+// ValkeyModule defines a Valkey module to load at startup
+type ValkeyModule struct {
+	// Path to the module shared library (.so file)
+	// +kubebuilder:validation:Required
+	Path string `json:"path"`
+
+	// Arguments to pass to the module
+	// +optional
+	Args []string `json:"args,omitempty"`
+}
+
 // ValkeySpec defines the desired state of Valkey
 type ValkeySpec struct {
 	// INSERT ADDITIONAL SPEC FIELDS - desired state of cluster
@@ -31,6 +42,10 @@ type ValkeySpec struct {
 
 	// Image to use
 	Image string `json:"image,omitempty"`
+
+	// Modules to load at startup (e.g., valkey-search with coordinator)
+	// +optional
+	Modules []ValkeyModule `json:"modules,omitempty"`
 
 	// Exporter Image to use
 	ExporterImage string `json:"exporterImage,omitempty"`

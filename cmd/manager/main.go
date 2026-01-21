@@ -40,11 +40,11 @@ import (
 
 	certv1 "github.com/cert-manager/cert-manager/pkg/apis/certmanager/v1"
 	monitoringv1 "github.com/prometheus-operator/prometheus-operator/pkg/apis/monitoring/v1"
-	hyperspikeiov1 "hyperspike.io/valkey-operator/api/v1"
-	"hyperspike.io/valkey-operator/cfg"
-	"hyperspike.io/valkey-operator/internal/controller"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	hyperspikeiov1 "kailas.cloud/valkey-operator/api/v1"
+	"kailas.cloud/valkey-operator/cfg"
+	"kailas.cloud/valkey-operator/internal/controller"
 	// +kubebuilder:scaffold:imports
 )
 
@@ -132,7 +132,7 @@ func main() {
 		WebhookServer:          webhookServer,
 		HealthProbeBindAddress: probeAddr,
 		LeaderElection:         enableLeaderElection,
-		LeaderElectionID:       "4ca2c877.hyperspike.io",
+		LeaderElectionID:       "4ca2c877.kailas.cloud",
 		// LeaderElectionReleaseOnCancel defines if the leader should step down voluntarily
 		// when the Manager ends. This requires the binary to immediately end when the
 		// Manager is stopped, otherwise, this setting is unsafe. Setting this significantly

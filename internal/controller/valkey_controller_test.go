@@ -30,7 +30,7 @@ import (
 
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	hyperspikeiov1 "hyperspike.io/valkey-operator/api/v1"
+	hyperspikeiov1 "kailas.cloud/valkey-operator/api/v1"
 )
 
 var _ = Describe("Valkey Controller", func() {
