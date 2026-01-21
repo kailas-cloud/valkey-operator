@@ -310,12 +310,13 @@ $(GOSEC): $(LOCALBIN)
 # $1 - target path with name of binary (ideally with version)
 # $2 - package url which can be installed
 # $3 - specific version of package
+# Note: GOOS= GOARCH= ensures tools are built for native platform even during cross-compilation
 define go-install-tool
 @[ -f $(1) ] || { \
 set -e; \
 package=$(2)@$(3) ;\
 echo "Downloading $${package}" ;\
-GOBIN=$(LOCALBIN) go install $${package} ;\
+GOOS= GOARCH= GOBIN=$(LOCALBIN) go install $${package} ;\
 mv "$$(echo "$(1)" | sed "s/-$(3)$$//")" $(1) ;\
 }
 endef
