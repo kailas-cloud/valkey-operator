@@ -3,16 +3,15 @@ FROM alpine:3.23.2 AS builder
 ARG VALKEY_VERSION=9.0.1
 WORKDIR /home/valkey
 
-# hadolint ignore=DL3018
 RUN apk add --no-cache --virtual .build-deps \
-	git \
-	coreutils \
-	linux-headers \
-	musl-dev \
-	openssl-dev \
-	gcc \
-	curl \
-	make \
+	git=2.52.0-r0 \
+	coreutils=9.8-r1 \
+	linux-headers=6.16.12-r0 \
+	musl-dev=1.2.5-r21 \
+	openssl-dev=3.5.5-r0 \
+	gcc=15.2.0-r2 \
+	curl=8.17.0-r1 \
+	make=4.4.1-r3 \
 	&& curl -L https://github.com/valkey-io/valkey/archive/refs/tags/${VALKEY_VERSION}.tar.gz -o valkey.tar.gz \
 	&& tar -xzf valkey.tar.gz --strip-components=1 \
 	&& make PREFIX=/usr BUILD_TLS=yes \
@@ -20,11 +19,10 @@ RUN apk add --no-cache --virtual .build-deps \
 
 FROM alpine:3.23.2 AS valkey
 
-# hadolint ignore=DL3018
 RUN apk add --no-cache \
-	openssl \
-	ca-certificates \
-	coreutils \
+	openssl=3.5.5-r0 \
+	ca-certificates=20251003-r0 \
+	coreutils=9.8-r1 \
 	&& addgroup -S valkey -g 1009 \
 	&& adduser -S -G valkey valkey -u 1009 \
 	&& mkdir /etc/valkey \
