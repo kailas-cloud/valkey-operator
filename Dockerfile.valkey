@@ -3,6 +3,7 @@ FROM alpine:3.23.2 AS builder
 ARG VALKEY_VERSION=9.0.1
 WORKDIR /home/valkey
 
+# hadolint ignore=DL3018
 RUN apk add --no-cache --virtual .build-deps \
 	git \
 	coreutils \
@@ -19,6 +20,7 @@ RUN apk add --no-cache --virtual .build-deps \
 
 FROM alpine:3.23.2 AS valkey
 
+# hadolint ignore=DL3018
 RUN apk add --no-cache \
 	openssl \
 	ca-certificates \
